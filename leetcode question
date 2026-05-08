@@ -1,0 +1,99 @@
+13. Palindrome Linked List
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+ if(head==null || head.next==null)
+         { 
+            return true;
+         }
+         ListNode slow=head;
+         ListNode fast=head;
+         while(fast!=null && fast.next!=null)
+         {
+            slow=slow.next;
+            fast=fast.next.next;
+         }
+           ListNode secondhalf=reverse(slow);
+           ListNode firsthalf=head;
+           while(secondhalf!=null)
+           {
+              if(firsthalf.val!=secondhalf.val)
+              
+                return false;
+              firsthalf=firsthalf.next;
+              secondhalf=secondhalf.next;
+           }
+           return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = nextNode;
+        }
+        return prev;
+    }
+}
+
+
+
+14. Two Sum IV - Input is a BST
+
+lass Solution {
+    HashSet<Integer> set = new HashSet<>();
+
+    public boolean findTarget(TreeNode root, int k) {
+       
+        if (root == null) return false;
+
+     
+        if (set.contains(k - root.val)) return true;
+        set.add(root.val);
+
+        // Recurse on left and right subtrees
+        return findTarget(root.left, k) || findTarget(root.right, k);
+    }
+}
+
+15. Maximum Depth of Binary Tree
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root==null)
+        {
+            return 0;
+        }
+        int x=maxDepth(root.left);
+        int y=maxDepth(root.right);
+        return(Math.max(x,y)+1);
+    }
+}

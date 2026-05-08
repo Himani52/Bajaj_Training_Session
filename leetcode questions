@@ -1,0 +1,246 @@
+1.Running Sum of 1D Array 
+class Solution {
+    public int[] runningSum(int[] nums) {
+        int n = nums.length;
+        int[] arr = new int[n];
+        arr[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            arr[i] = arr[i - 1] + nums[i];
+        }
+        return arr;
+    }
+}
+
+2. Find Pivot Index 
+class Solution {
+    public int pivotIndex(int[] nums) {
+        // Initialize total sum of the given array...
+        int totalSum = 0;
+        // Initialize 'leftsum' as sum of first i numbers, not including nums[i]...
+        int leftsum = 0;
+        // Traverse the elements and add them to store the totalSum...
+        for (int ele : nums)
+            totalSum += ele;
+        // Again traverse all the elements through the for loop and store the sum of i numbers from left to right...
+        for (int i = 0; i < nums.length; leftsum += nums[i++])
+            // sum to the left == leftsum.
+            // sum to the right === totalSum - leftsum - nums[i]..
+            // check if leftsum == totalSum - leftsum - nums[i]...
+            if (leftsum * 2 == totalSum - nums[i])
+                return i;       // Return the pivot index...
+        return -1;      // If there is no index that satisfies the conditions in the problem statement...
+    }
+}
+
+3. Number Of Islands 
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int n=grid.length; 
+        int m=grid[0].length;
+        int count=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]=='1')
+                {
+                    count++;
+                    isgrid(grid,i,j);
+                }
+            }
+        }
+        return count;
+    }
+
+    public void isgrid(char[][] grid ,int i,int j)
+    {
+           if( i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]=='0')
+           {
+            return;
+           }
+           grid[i][j]='0';
+           isgrid(grid,i+1,j);
+           isgrid(grid,i-1,j);
+           isgrid(grid,i,j+1);
+           isgrid(grid,i,j-1);
+    }
+}
+
+4. Flood Fill 
+class Solution {
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+         if(image[sr][sc]==color) return image;
+         fill(image,sr,sc,color,image[sr][sc]);
+         return image;
+    }
+    public void fill(int[][] image,int sr,int sc,int color,int curr)
+    {
+        if(sr<0 || sr>=image.length || sc<0 || sc>=image[0].length) return;
+        if(curr!=image[sr][sc]) return;
+        image[sr][sc]=color;
+        fill(image,sr+1,sc,color,curr);
+        fill(image,sr-1,sc,color,curr);
+        fill(image,sr,sc+1,color,curr);
+        fill(image,sr,sc-1,color,curr);
+    }
+}
+
+
+5.Range Sum Query - Immutable
+
+class NumArray {
+      int[] arr;
+    public NumArray(int[] nums) {
+        arr=nums;
+        for(int i=1;i<arr.length;i++)
+        {
+            arr[i]=arr[i-1]+arr[i];
+        }
+    }
+    
+    public int sumRange(int left, int right) {
+        if(left==0) 
+        {
+            return arr[right];
+        }
+        return  arr[right]-arr[left-1];
+    }
+}
+
+6.Two Sum 
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> map=new  HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            int comp=target-nums[i];
+            if(map.containsKey(comp))
+            {
+                return new int[]{map.get(comp),i};
+            }
+            map.put(nums[i],i);
+        }
+   return new int[] {};
+    }
+}
+
+7. Maximum Subarray
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+         
+         int maxsum=nums[0];
+         int currsum=0;
+         for(int num : nums)
+         {
+            currsum=Math.max(num,currsum+num);
+            maxsum=Math.max(maxsum,currsum);
+         }
+         return maxsum;
+    }
+}
+
+8. Subarray Sum Equals K
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer,Integer>map=new HashMap<>();
+        map.put(0,1);
+        int sum=0;
+        int count=0;
+        for(int num:nums)
+        {
+            sum+=num;
+            if(map.containsKey(sum-k))
+            {
+                  count+=map.get(sum-k);
+            }
+            map.put(sum,map.getOrDefault(sum,0)+1);
+        }
+        return count;
+    }
+}
+
+9.Longest Substring Without Repeating Characters
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        HashMap<Character,Integer> map=new HashMap<>();
+        int maxlen=0;
+        int l=0;
+        int r=0;
+        while(r<s.length())
+        {
+            map.put(s.charAt(r),map.getOrDefault(s.charAt(r),0)+1);
+            while(map.get(s.charAt(r))>1)
+            {
+                map.put(s.charAt(l),map.get(s.charAt(l))-1);
+                if(map.get(s.charAt(l))==0) map.remove(s.charAt(l));     
+                l++;
+            }
+            maxlen=Math.max(maxlen,r-l+1);
+            r++;
+        }
+        return maxlen;
+    }
+}
+
+10. Reverse Linked List
+class Solution {
+    public ListNode reverseList(ListNode head) {
+      ListNode prev=null;
+      ListNode curr=head;
+      while(curr!=null)
+      {
+        ListNode next=curr.next;
+        curr.next=prev;
+        prev=curr;
+        curr=next;
+      }
+      return prev;
+    }
+}
+
+11. Middle of the Linked List
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+       ListNode slow=head;
+       ListNode fast=head;
+       while(fast!=null  && fast.next!=null)
+       {
+        slow=slow.next;
+        fast=fast.next.next;
+    }
+    return slow;
+    }
+}
+
+12. Find Peak Element
+
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int n=nums.length;
+        for(int i=0;i<n-1;i++)
+        {
+            if(nums[i]>nums[i+1]) 
+            {
+                return i;
+            }
+        }
+        return n-1;
+    }
+}
+
