@@ -42,15 +42,15 @@ This repository contains DSA problems solved during the Bajaj training sessions 
 
 Compile the Java file:
 
-bash
+```bash
 javac FileName.java
-
+```
 
 Run the program:
 
-bash
+```bash
 java FileName
-
+```
 
 ---
 
