@@ -38,15 +38,23 @@ This repository contains DSA problems solved during the Bajaj training sessions 
 
 ---
 
-## ▶️ How to Run
+# ▶️ Running the Code
 
 Compile the Java file:
 
-```bash
+bash
 javac FileName.java
 
-## 👤 Author
 
+Run the program:
+
+bash
+java FileName
+
+
+---
+
+## 👤 Author
 
 *Himani*
 
